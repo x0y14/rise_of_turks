@@ -1,0 +1,81 @@
+﻿rot_test_setup_slave_trade_center_decision = {
+    decision_group_type = debug
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds"
+	}
+	is_shown = {
+		debug_only = yes
+	}
+    is_valid_showing_failures_only = {
+    }
+
+    effect = {
+        custom_tooltip = {
+            text = rot_setup_slave_trade_center_effect_tt
+            # Bukhara
+            title:c_bukhara = {
+                if = {
+                    limit = { NOT = { has_variable = rot_slave_token } } 
+                    set_variable = {
+                        name = rot_slave_token
+                        value = 0
+                    }
+                }
+                change_variable = {
+                    name = rot_slave_token
+                    add = 1
+                }
+                if = {
+                    limit = { NOT = { has_county_modifier = rot_slave_trade_center_bukhara } }
+                    add_county_modifier = {
+                        modifier = rot_slave_trade_center_bukhara
+                    }
+                }
+            }
+            # Samarra
+            title:c_samarra = {
+                if = {
+                    limit = { NOT = { has_variable = rot_slave_token } } 
+                    set_variable = {
+                        name = rot_slave_token
+                        value = 0
+                    }
+                }
+                change_variable = {
+                    name = rot_slave_token
+                    add = 1
+                }
+                if = {
+                    limit = { NOT = { has_county_modifier = rot_slave_trade_center_samarra } }
+                    add_county_modifier = {
+                        modifier = rot_slave_trade_center_samarra
+                    }
+                }
+            }
+            # Cairo
+            title:c_cairo = {
+                if = {
+                    limit = { NOT = { has_variable = rot_slave_token } } 
+                    set_variable = {
+                        name = rot_slave_token
+                        value = 0
+                    }
+                }
+                change_variable = {
+                    name = rot_slave_token
+                    add = 1
+                }
+                if = {
+                    limit = { NOT = { has_county_modifier = rot_slave_trade_center_cairo } }
+                    add_county_modifier = {
+                        modifier = rot_slave_trade_center_cairo
+                    }
+                }
+            }
+        }
+    }
+
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}

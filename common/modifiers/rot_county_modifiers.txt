@@ -1,0 +1,12 @@
+﻿rot_slave_trade_center_bukhara = {
+    icon = prison_mixed
+    development_growth_factor = very_large_development_growth_gain
+}
+rot_slave_trade_center_samarra = {
+    icon = prison_mixed
+    development_growth_factor = very_large_development_growth_gain
+}
+rot_slave_trade_center_cairo = {
+    icon = prison_mixed
+    development_growth_factor = very_large_development_growth_gain
+}

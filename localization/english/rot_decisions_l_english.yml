@@ -1,0 +1,6 @@
+﻿l_english:
+  rot_test_setup_slave_trade_center_decision: "Setup Slave Trade Center"
+  rot_test_setup_slave_trade_center_decision_desc: "DESC"
+  rot_test_setup_slave_trade_center_decision_tooltip: "TOOLTIP"
+  rot_test_setup_slave_trade_center_decision_confirm: "confirm"
+  rot_setup_slave_trade_center_effect_tt: "setup slave trade ceonter modifier to c_bukhara, c_samarra, c_cairo"

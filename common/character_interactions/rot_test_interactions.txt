@@ -1,0 +1,111 @@
+﻿rot_test_give_slave_token = {
+	category = interaction_debug_main
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	icon = debug_good
+
+	is_shown = {
+		debug_only = yes
+		NOT = { scope:recipient = scope:actor }
+	}
+
+    is_valid_showing_failures_only = {
+        scope:actor = {
+            is_independent_ruler = yes
+            OR = {
+                this = title:c_bukhara.holder.top_liege
+                this = title:c_samarra.holder.top_liege
+                this = title:c_cairo.holder.top_liege
+            }
+        }
+        scope:recipient = {
+            is_independent_ruler = yes
+            OR = {
+                this = title:c_bukhara.holder.top_liege
+                this = title:c_samarra.holder.top_liege
+                this = title:c_cairo.holder.top_liege
+            }
+        }
+    }
+
+    auto_accept = yes
+    on_accept = {
+        custom_tooltip = {
+            text = rot_test_give_slave_token_actor_tt
+            scope:actor = {
+                if = {
+                    limit = {
+                        this = title:c_bukhara.holder.top_liege
+                    }
+                    title:c_bukhara = {
+                        change_variable = {
+                            name = rot_slave_token
+                            add = -1
+                        }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        this = title:c_samarra.holder.top_liege
+                    }
+                    title:c_samarra = {
+                        change_variable = {
+                            name = rot_slave_token
+                            add = -1
+                        }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        this = title:c_cairo.holder.top_liege
+                    }
+                    title:c_cairo = {
+                        change_variable = {
+                            name = rot_slave_token
+                            add = -1
+                        }
+                    }
+                }
+            }
+        }
+
+        custom_tooltip = {
+            text = rot_test_give_slave_token_recipient_tt
+            scope:recipient = {
+                if = {
+                    limit = {
+                        this = title:c_bukhara.holder.top_liege
+                    }
+                    title:c_bukhara = {
+                        change_variable = {
+                            name = rot_slave_token
+                            add = 1
+                        }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        this = title:c_samarra.holder.top_liege
+                    }
+                    title:c_samarra = {
+                        change_variable = {
+                            name = rot_slave_token
+                            add = 1
+                        }
+                    }
+                }
+                else_if = {
+                    limit = {
+                        this = title:c_cairo.holder.top_liege
+                    }
+                    title:c_cairo = {
+                        change_variable = {
+                            name = rot_slave_token
+                            add = 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

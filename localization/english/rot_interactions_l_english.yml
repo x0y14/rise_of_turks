@@ -1,0 +1,5 @@
+﻿l_english:
+  rot_test_give_slave_token: "Give Slave Token"
+  rot_test_give_slave_token_desc: "DESC"
+  rot_test_give_slave_token_actor_tt: "slave token -1"
+  rot_test_give_slave_token_recipient_tt: "slave token +1"

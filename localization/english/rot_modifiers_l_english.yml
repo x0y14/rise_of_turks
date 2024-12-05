@@ -1,0 +1,7 @@
+﻿l_english:
+  rot_slave_trade_center_bukhara: "Slave Trade Center"
+  rot_slave_trade_center_bukhara_desc: "The slave trade is taking place in this county: [GetTitleByKey('c_bukhara').MakeScope.Var('rot_slave_token').GetValue]"
+  rot_slave_trade_center_samarra: "Slave Trade Center"
+  rot_slave_trade_center_samarra_desc: "The slave trade is taking place in this county: [GetTitleByKey('c_samarra').MakeScope.Var('rot_slave_token').GetValue]"
+  rot_slave_trade_center_cairo: "Slave Trade Center"
+  rot_slave_trade_center_cairo_desc: "The slave trade is taking place in this county: [GetTitleByKey('c_cairo').MakeScope.Var('rot_slave_token').GetValue]"
