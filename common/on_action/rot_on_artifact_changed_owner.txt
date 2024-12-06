@@ -1,0 +1,57 @@
+﻿on_artifact_changed_owner = {
+    on_actions = {
+        rot_cargomanifest_changed_owner
+    }
+}
+
+rot_cargomanifest_changed_owner = {
+    trigger = {
+        # This is Cargo Manifest
+        has_variable = rot_slave_token
+        # New Owner has Trade Center
+        scope:owner = {
+            OR = {
+                AND = {
+                    this = title:c_bukhara.holder.top_liege
+                    title:c_bukhara = { has_county_modifier = rot_slave_trade_center_bukhara }
+                }
+                AND = {
+                    this = title:c_samarra.holder.top_liege
+                    title:c_samarra = { has_county_modifier = rot_slave_trade_center_samarra }
+                }
+                AND = {
+                    this = title:c_cairo.holder.top_liege
+                    title:c_cairo = { has_county_modifier = rot_slave_trade_center_cairo }
+                }
+            }
+        }
+    }
+    effect = {
+        save_scope_as = artifact_cargo_manifest
+
+        # 荷下ろし先を決める
+        title:c_bukhara = { add_to_list = trade_center_counties }
+        title:c_samarra = { add_to_list = trade_center_counties }
+        title:c_cairo = { add_to_list = trade_center_counties }
+        random_in_list = {
+            list = trade_center_counties
+            limit = { scope:owner = this.holder.top_liege }
+            save_scope_as = caravan_unload_county
+        }
+
+        # 荷下ろし
+        scope:caravan_unload_county = {
+            change_variable = {
+                name = rot_slave_token
+                add = scope:artifact_cargo_manifest.var:rot_slave_token
+            }
+        }
+        scope:artifact_cargo_manifest = {
+            change_variable = {
+                name = rot_slave_token
+                subtract = var:rot_slave_token
+            }
+            destroy_artifact = this
+        }
+    }
+}

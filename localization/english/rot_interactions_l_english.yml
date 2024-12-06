@@ -3,3 +3,7 @@
   rot_test_give_slave_token_desc: "DESC"
   rot_test_give_slave_token_actor_tt: "slave token -1"
   rot_test_give_slave_token_recipient_tt: "slave token +1"
+
+  rot_test_create_trade_task_contract_interaction: "Create Trade Task Contract"
+  rot_test_create_trade_task_contract_interaction_desc: "DESC"
+  rot_test_create_trade_task_contract_interaction_no_slave_trade_center_err_tt: "bukhara, samarra and cairo has not slave trade center"

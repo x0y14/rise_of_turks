@@ -109,3 +109,116 @@
         }
     }
 }
+
+rot_test_create_trade_task_contract_interaction = {
+    category = interaction_debug_admin
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+    icon = icon_contract_modification_single
+
+    is_shown = {
+		debug_only = yes
+		NOT = { scope:recipient = scope:actor }
+		scope:actor = {
+			is_landless_adventurer = yes
+		}
+    }
+
+    is_valid_showing_failures_only = {
+		valid_laamp_basic_trigger = {
+			EMPLOYER = scope:recipient
+			LAAMP = scope:actor
+		}
+
+        scope:recipient = {
+            is_landed = yes
+            is_independent_ruler = yes
+            OR = {
+                this = title:c_bukhara.holder.top_liege
+                this = title:c_samarra.holder.top_liege
+                this = title:c_cairo.holder.top_liege
+            }
+            NAND = {
+                this = title:c_bukhara.holder.top_liege
+                this = title:c_samarra.holder.top_liege
+                this = title:c_cairo.holder.top_liege
+            }
+            custom_tooltip = {
+                text = rot_test_create_trade_task_contract_interaction_no_slave_trade_center_err_tt
+                title:c_bukhara = { has_county_modifier = rot_slave_trade_center_bukhara }
+                title:c_samarra = { has_county_modifier = rot_slave_trade_center_samarra }
+                title:c_cairo = { has_county_modifier = rot_slave_trade_center_cairo }
+            }
+        }
+    }
+
+    auto_accept = yes
+    on_accept = {
+        title:c_bukhara = { add_to_list = trade_center_counties }
+        title:c_samarra = { add_to_list = trade_center_counties }
+        title:c_cairo = { add_to_list = trade_center_counties }
+        # 出発地点のトレードセンターを選ぶ
+        random_in_list = {
+            list = trade_center_counties
+            limit = { scope:recipient = this.holder.top_liege }
+            save_scope_as = caravan_origin_county
+        }
+        # キャラバンの行き先を決める
+        random_in_list = {
+            list = trade_center_counties
+            limit = { NOT = { scope:recipient = this.holder.top_liege } }
+            save_scope_as = caravan_dest_county
+        }
+
+        # 積載リストを作成する
+        scope:recipient = {
+            create_artifact = {
+                name = rot_cargo_manifest
+                description = placeholder
+                type = miscellaneous
+                visuals = book
+                modifier = rot_artifact_cargo_manifest_modifier
+                save_scope_as = newly_created_artifact
+            }
+            # 積載
+            scope:newly_created_artifact = {
+                set_variable = {
+                    name = rot_slave_token
+                    value = scope:caravan_origin_county.var:rot_slave_token
+                }
+                set_artifact_description = rot_cargo_manifest_description
+            }
+        }
+        scope:caravan_origin_county = {
+            change_variable = {
+                name = rot_slave_token
+                subtract = var:rot_slave_token
+            }
+        }
+
+        # 契約の作成
+        scope:actor = {
+            create_task_contract = {
+                task_contract_type = laamp_transport_artifact # 契約の種類
+                location = scope:recipient.capital_province # どこに契約を生成するか
+                task_contract_employer = scope:recipient # 雇う人
+                task_contract_tier = 22500 #Legendary!
+                save_scope_as = new_contract
+                target = scope:caravan_dest_county.holder.top_liege # 受取役となるのは誰
+            }
+            # 契約の肉付け
+            scope:new_contract = {
+                # 運ぶものを設定
+                set_variable = {
+                    name = escorted_artifact
+                    value = scope:newly_created_artifact
+                }
+                # どこに運ぶ
+                set_variable = {
+                    name = task_contract_destination
+                    value = scope:caravan_dest_county.title_province
+                }
+            }
+        }
+    }
+}

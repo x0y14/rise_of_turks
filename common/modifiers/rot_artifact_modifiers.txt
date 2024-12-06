@@ -1,0 +1,3 @@
+﻿rot_artifact_cargo_manifest_modifier = {
+    character_travel_speed = -10
+}
