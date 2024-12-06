@@ -116,11 +116,18 @@ rot_test_create_trade_task_contract_decision = {
         # 積載リストを作成する
         create_artifact = {
             name = rot_cargo_manifest
-            description = rot_cargo_manifest_description
+            description = placeholder
             type = miscellaneous
             visuals = book
             modifier = artifact_monthly_prestige_penalty_modifier
             save_scope_as = newly_created_artifact
+        }
+        scope:newly_created_artifact = {
+            set_variable = {
+                name = rot_slave_token
+                value = 0
+            }
+            set_artifact_description = rot_cargo_manifest_description
         }
         # 積載リストを運ぶ契約を作成する
         if = {
