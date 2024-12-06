@@ -4,3 +4,8 @@
   rot_test_setup_slave_trade_center_decision_tooltip: "TOOLTIP"
   rot_test_setup_slave_trade_center_decision_confirm: "confirm"
   rot_setup_slave_trade_center_effect_tt: "setup slave trade ceonter modifier to c_bukhara, c_samarra, c_cairo"
+
+  rot_test_create_trade_task_contract_decision: "Create Trade Task Contract"
+  rot_test_create_trade_task_contract_decision_desc: ""
+  rot_test_create_trade_task_contract_decision_tooltip: "TOOLTIP"
+  rot_test_create_trade_task_contract_decision_confirm: "confirm"

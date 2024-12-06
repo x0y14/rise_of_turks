@@ -79,3 +79,95 @@
 	ai_potential = { always = no }
 	ai_will_do = { base = 0 }
 }
+
+rot_test_create_trade_task_contract_decision = {
+    decision_group_type = debug
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds"
+	}
+	is_shown = {
+		debug_only = yes
+	}
+    is_valid_showing_failures_only = {
+        # どれか持ってなきゃだめ
+        OR = {
+            this = title:c_bukhara.holder.top_liege
+            this = title:c_samarra.holder.top_liege
+            this = title:c_cairo.holder.top_liege
+        }
+        # 全部持ってたらだめ
+        NAND = {
+            this = title:c_bukhara.holder.top_liege
+            this = title:c_samarra.holder.top_liege
+            this = title:c_cairo.holder.top_liege
+        }
+    }
+
+    effect = {
+        # Caravanの行き先を決める
+        title:c_bukhara = { add_to_list = trade_center_counties }
+        title:c_samarra = { add_to_list = trade_center_counties }
+        title:c_cairo = { add_to_list = trade_center_counties }
+        random_in_list = {
+            list = trade_center_counties
+            limit = { NOT = { root = this.holder.top_liege } }
+            save_scope_as = caravan_target_county
+        }
+        # 積載リストを作成する
+        create_artifact = {
+            name = rot_cargo_manifest
+            description = rot_cargo_manifest_description
+            type = miscellaneous
+            visuals = book
+            modifier = artifact_monthly_prestige_penalty_modifier
+            save_scope_as = newly_created_artifact
+        }
+        # 積載リストを運ぶ契約を作成する
+        if = {
+            limit = {
+                any_ruler = {
+                    is_landless_adventurer = yes
+					is_within_diplo_range = { CHARACTER = root }
+					any_character_task_contract = {
+						has_task_contract_type = laamp_transport_artifact
+						count <= 6
+					}
+					can_create_task_contract = {
+						type_name = laamp_transport_artifact
+						employer = root
+					}
+                    save_temporary_scope_as = laamp
+                }
+            }
+        }
+        scope:laamp = {
+            create_task_contract = {
+                task_contract_type = laamp_transport_artifact # 契約の種類
+                location = root.capital_province # どこに契約を生成するか
+                task_contract_employer = root # 雇う人
+                task_contract_tier = 22500 #Legendary!
+                save_scope_as = new_contract
+                target = scope:caravan_target_county.holder.top_liege # 受取役となるのは誰
+                # destination = scope:county.title_province
+            }
+            # 契約の肉付け
+            scope:new_contract = {
+                # 運ぶものを設定
+                set_variable = {
+                    name = escorted_artifact
+                    value = scope:newly_created_artifact
+                }
+                # どこに運ぶ
+                set_variable = {
+                    name = task_contract_destination
+                    value = scope:caravan_target_county.title_province
+                }
+            }
+        }
+        debug_log_scopes = yes
+    }
+
+	ai_check_interval = 0
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
